@@ -1,9 +1,9 @@
 import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
-import './App.css';
-import Column from './components/Column';
-import { ColumnType } from './utils/enums';
+import { ColumnType } from './utils';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DarkModeIconButton, Column } from './components';
+import './App.css';
 
 function App() {
   return (
@@ -16,8 +16,9 @@ function App() {
         bgClip="text"
         mt={4}
       >
-        New Drag and Drop Kanban
+        Practical Drag and Drop Kanban
       </Heading>
+      <DarkModeIconButton position="absolute" top={0} right={2} />
       <Container maxWidth="container.lg" px={4} py={10}>
         <DndProvider backend={HTML5Backend}>
           <SimpleGrid

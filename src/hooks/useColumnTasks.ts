@@ -1,9 +1,7 @@
 import { useCallback } from 'react';
 import { v4 as uuidv } from 'uuid';
-import { ColumnType } from '@/utils';
-import { TaskModel } from '@/utils';
+import { ColumnType, TaskModel, pickChakraRandomColor } from '../utils';
 import { useTaskCollection } from './useTaskCollection';
-import { pickChakraRandomColor } from '../utils';
 
 const MAX_TASK_PER_COLUMN = 100;
 
@@ -11,8 +9,6 @@ export function useColumnTasks(column: ColumnType) {
   const [tasks, setTasks] = useTaskCollection();
 
   const addEmptyTask = useCallback(() => {
-    console.log(`Adding new empty column to ${column} column`);
-
     setTasks((allTasks) => {
       const columnTasks = allTasks[column];
 
@@ -37,7 +33,6 @@ export function useColumnTasks(column: ColumnType) {
 
   const updateTask = useCallback(
     (id: TaskModel['id'], updatedTask: Omit<Partial<TaskModel>, 'id'>) => {
-      console.log(`Updating task ${id} with ${JSON.stringify(updatedTask)}`);
       setTasks((allTasks) => {
         const columnTasks = allTasks[column];
 
@@ -54,8 +49,6 @@ export function useColumnTasks(column: ColumnType) {
 
   const deleteTask = useCallback(
     (id: TaskModel['id']) => {
-      console.log(`Removin task ${id}..`);
-
       setTasks((allTasks) => {
         const columnTasks = allTasks[column];
         return {
@@ -89,11 +82,24 @@ export function useColumnTasks(column: ColumnType) {
     [column, setTasks]
   );
 
+  const swapTasks = useCallback(
+    (i: number, j: number) => {
+      setTasks((allTasks) => {
+        const columnTasks = allTasks[column];
+        return {
+          ...allTasks,
+          [column]: swap(columnTasks, i, j),
+        };
+      });
+    },
+    [column, setTasks]
+  );
   return {
     tasks: tasks[column],
     addEmptyTask,
     updateTask,
     deleteTask,
     dropTaskFrom,
+    swapTasks,
   };
 }

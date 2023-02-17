@@ -1,4 +1,3 @@
-import { AddIcon } from '@chakra-ui/icons';
 import {
   Badge,
   Box,
@@ -7,8 +6,8 @@ import {
   Stack,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 import { ColumnType } from '@/utils';
-import { TaskModel } from '@/utils';
 import { Task } from './Task';
 import { useColumnTasks, useColumnDrop } from '../hooks';
 
@@ -19,9 +18,15 @@ const ColumnColorScheme: Record<ColumnType, string> = {
   Completed: 'green',
 };
 
-function Column({ column }: { column: ColumnType }) {
-  const { tasks, addEmptyTask, updateTask, deleteTask, dropTaskFrom } =
-    useColumnTasks(column);
+export function Column({ column }: { column: ColumnType }) {
+  const {
+    tasks,
+    addEmptyTask,
+    updateTask,
+    deleteTask,
+    dropTaskFrom,
+    swapTasks,
+  } = useColumnTasks(column);
 
   const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
 
@@ -32,6 +37,7 @@ function Column({ column }: { column: ColumnType }) {
       index={index}
       onDelete={deleteTask}
       onUpdate={updateTask}
+      onDropHover={swapTasks}
     />
   ));
   return (
@@ -77,5 +83,3 @@ function Column({ column }: { column: ColumnType }) {
     </Box>
   );
 }
-
-export default Column;

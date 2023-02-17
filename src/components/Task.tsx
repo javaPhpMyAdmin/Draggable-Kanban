@@ -1,4 +1,4 @@
-import { Box, Textarea } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { TaskModel } from '@/utils';
 import { IconButton } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
@@ -10,6 +10,7 @@ type TaskProps = {
   task: TaskModel;
   onDelete: (id: TaskModel['id']) => void;
   onUpdate: (id: TaskModel['id'], updatedTask: TaskModel) => void;
+  onDropHover: (i: number, j: number) => void;
 };
 
 export function Task({
@@ -17,10 +18,12 @@ export function Task({
   task,
   onDelete: handleDelete,
   onUpdate: handleUpdate,
+  onDropHover: handleDropHover,
 }: TaskProps) {
   const { ref, isDragging } = useTaskDragAndDrop<HTMLDivElement>({
     task,
     index,
+    handleDropHover,
   });
 
   const handleTittleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
