@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { v4 as uuidv } from 'uuid';
-import { ColumnType, TaskModel, pickChakraRandomColor } from '../utils';
+import { ColumnType, TaskModel, pickChakraRandomColor, swap } from '../utils';
 import { useTaskCollection } from './useTaskCollection';
 
 const MAX_TASK_PER_COLUMN = 100;
